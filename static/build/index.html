@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Responsive Social Media</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-white shadow p-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-blue-600">SocialApp</h1>
+        <nav>
+            <ul class="flex space-x-4">
+                <li><a href="#" class="text-gray-700 hover:text-blue-600">Home</a></li>
+                <li><a href="#" class="text-gray-700 hover:text-blue-600">Profile</a></li>
+                <li><a href="#" class="text-gray-700 hover:text-blue-600">Messages</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col items-center py-6 px-2">
+        <!-- User Profile -->
+        <div class="w-full max-w-xl bg-white rounded-lg shadow p-4 mb-6 flex items-center">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="w-16 h-16 rounded-full mr-4 border-2 border-blue-500">
+            <div>
+                <h2 class="text-lg font-bold text-gray-800">John Doe</h2>
+                <p class="text-gray-500 text-sm">Web Developer & Coffee Lover</p>
+            </div>
+        </div>
+
+        <!-- Post Form -->
+        <div class="w-full max-w-xl bg-white rounded-lg shadow p-4 mb-6">
+            <form id="postForm" class="flex flex-col space-y-3">
+                <textarea id="postContent" class="border rounded p-2 resize-none" rows="3" placeholder="What's on your mind?"></textarea>
+                <input type="url" id="postImage" class="border rounded p-2" placeholder="Image URL (optional)">
+                <button type="submit" class="self-end bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Post</button>
+            </form>
+        </div>
+
+        <!-- Posts Feed -->
+        <div id="postsFeed" class="w-full max-w-xl space-y-4">
+            <!-- Example Post 1 -->
+            <div class="bg-white rounded-lg shadow p-4">
+                <div class="flex items-center mb-2">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="w-10 h-10 rounded-full mr-3">
+                    <span class="font-semibold text-gray-800">Jane Smith</span>
+                    <span class="ml-auto text-xs text-gray-400">09:15 AM</span>
+                </div>
+                <p class="text-gray-700 mb-2">Enjoying a sunny day at the park!</p>
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Park" class="rounded-lg mb-2 w-full max-h-64 object-cover">
+                <div class="mt-3 flex space-x-4 text-gray-500 text-sm">
+                    <button class="likeBtn hover:text-blue-600">Like</button>
+                    <button class="replyBtn hover:text-blue-600">Reply</button>
+                </div>
+            </div>
+            <!-- Example Post 2 -->
+            <div class="bg-white rounded-lg shadow p-4">
+                <div class="flex items-center mb-2">
+                    <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="User" class="w-10 h-10 rounded-full mr-3">
+                    <span class="font-semibold text-gray-800">Alex Brown</span>
+                    <span class="ml-auto text-xs text-gray-400">Yesterday</span>
+                </div>
+                <p class="text-gray-700 mb-2">Just finished a new project! 🚀</p>
+                <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80" alt="Project" class="rounded-lg mb-2 w-full max-h-64 object-cover">
+                <div class="mt-3 flex space-x-4 text-gray-500 text-sm">
+                    <button class="likeBtn hover:text-blue-600">Like</button>
+                    <button class="replyBtn hover:text-blue-600">Reply</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white shadow p-4 text-center text-gray-500">
+        &copy; 2024 SocialApp
+    </footer>
+
+    <script>
+        $(function() {
+            $('#postForm').on('submit', function(e) {
+                e.preventDefault();
+                const content = $('#postContent').val().trim();
+                const imageUrl = $('#postImage').val().trim();
+                if(content) {
+                    let imageHtml = '';
+                    if(imageUrl) {
+                        imageHtml = `<img src="${$('<div>').text(imageUrl).html()}" alt="Post Image" class="rounded-lg mb-2 w-full max-h-64 object-cover">`;
+                    }
+                    const postHtml = `
+                        <div class="bg-white rounded-lg shadow p-4">
+                            <div class="flex items-center mb-2">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="w-10 h-10 rounded-full mr-3">
+                                <span class="font-semibold text-gray-800">John Doe</span>
+                                <span class="ml-auto text-xs text-gray-400">${new Date().toLocaleTimeString()}</span>
+                            </div>
+                            <p class="text-gray-700 mb-2">${$('<div>').text(content).html()}</p>
+                            ${imageHtml}
+                            <div class="mt-3 flex space-x-4 text-gray-500 text-sm">
+                                <button class="likeBtn hover:text-blue-600">Like</button>
+                                <button class="replyBtn hover:text-blue-600">Reply</button>
+                            </div>
+                        </div>
+                    `;
+                    $('#postsFeed').prepend(postHtml);
+                    $('#postContent').val('');
+                    $('#postImage').val('');
+                }
+            });
+
+            // Like button interaction
+            $('#postsFeed').on('click', '.likeBtn', function() {
+                $(this).toggleClass('text-blue-600');
+            });
+        });
+    </script>
+</body>
+</html>
