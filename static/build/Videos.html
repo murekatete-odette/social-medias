@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Responsive Videos & Reels Post</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center py-8">
+
+    <!-- Short Videos Section -->
+    <section class="w-full max-w-xl mb-8 space-y-8">
+        <!-- Video 1 -->
+        <div class="bg-white rounded-lg shadow p-4">
+            <h2 class="text-xl font-bold mb-4">Short Video 1</h2>
+            <div class="relative pb-[56.25%] mb-4">
+                <video class="absolute top-0 left-0 w-full h-full rounded-lg" controls poster="https://via.placeholder.com/640x360">
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="flex items-center justify-between text-gray-600 text-sm">
+                <div>
+                    <span class="mr-4"><i class="fa fa-eye"></i> <span id="short-views-1">1,234</span> Visitors</span>
+                </div>
+                <div class="flex space-x-4">
+                    <button class="like-btn flex items-center space-x-1" data-target="#short-likes-1"></button>
+                        <svg class="w-5 h-5 text-pink-500" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"/></svg>
+                        <span id="short-likes-1">120</span>
+                    </button>
+                    <button class="comment-btn flex items-center space-x-1" data-target="#short-comments-1"></button>
+                        <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M18 10c0 3.866-3.582 7-8 7a8.96 8.96 0 01-4.39-1.11L2 18l1.11-4.39A8.96 8.96 0 012 10c0-3.866 3.582-7 8-7s8 3.134 8 7z"/></svg>
+                        <span id="short-comments-1">45</span>
+                    </button>
+                    <button class="share-btn flex items-center space-x-1" data-target="#short-shares-1">
+                        <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path d="M15 8a3 3 0 10-2.83-2H8.83A3 3 0 106 8v4a3 3 0 102 2.83V11.17A3 3 0 1015 8z"/></svg>
+                        <span id="short-shares-1">30</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Video 2 -->
+        <div class="bg-white rounded-lg shadow p-4">
+            <h2 class="text-xl font-bold mb-4">Short Video 2</h2>
+            <div class="relative pb-[56.25%] mb-4">
+                <video class="absolute top-0 left-0 w-full h-full rounded-lg" controls poster="https://via.placeholder.com/640x360/ff7f7f/333333">
+                    <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="flex items-center justify-between text-gray-600 text-sm">
+                <div>
+                    <span class="mr-4"><i class="fa fa-eye"></i> <span id="short-views-2">2,567</span> Visitors</span>
+                </div>
+                <div class="flex space-x-4"></div>
+                    <button class="like-btn flex items-center space-x-1" data-target="#short-likes-2"></button>
+                        <svg class="w-5 h-5 text-pink-500" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"/></svg>
+                        <span id="short-likes-2">98</span>
+                    </button>
+                    <button class="comment-btn flex items-center space-x-1" data-target="#short-comments-2"></button>
+                        <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M18 10c0 3.866-3.582 7-8 7a8.96 8.96 0 01-4.39-1.11L2 18l1.11-4.39A8.96 8.96 0 012 10c0-3.866 3.582-7 8-7s8 3.134 8 7z"/></svg>
+                        <span id="short-comments-2">23</span>
+                    </button>
+                    <button class="share-btn flex items-center space-x-1" data-target="#short-shares-2"></button>
+                        <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path d="M15 8a3 3 0 10-2.83-2H8.83A3 3 0 106 8v4a3 3 0 102 2.83V11.17A3 3 0 1015 8z"/></svg>
+                        <span id="short-shares-2">12</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Add more videos as needed -->
+    </section>
+
+    <!-- Reels Post with Live Stream -->
+    <section class="w-full max-w-xl space-y-8">
+        <!-- Reel 1 -->
+        <div class="bg-white rounded-lg shadow p-4">
+            <div class="flex items-center mb-4">
+                <span class="inline-block bg-red-500 text-white text-xs px-2 py-1 rounded mr-2 animate-pulse">LIVE</span>
+                <h2 class="text-xl font-bold">Reels Post 1 - Live Stream</h2>
+            </div>
+            <div class="relative pb-[56.25%] mb-4"></div>
+                <iframe class="absolute top-0 left-0 w-full h-full rounded-lg" src="https://www.youtube.com/embed/5qap5aO4i9A" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="flex items-center justify-between text-gray-600 text-sm">
+                <div>
+                    <span class="mr-4"><i class="fa fa-eye"></i> <span id="reel-views-1">2,345</span> Visitors</span>
+                </div>
+                <div class="flex space-x-4">
+                    <button class="like-btn flex items-center space-x-1" data-target="#reel-likes-1">
+                        <svg class="w-5 h-5 text-pink-500" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"/></svg>
+                        <span id="reel-likes-1">210</span>
+                    </button>
+                    <button class="comment-btn flex items-center space-x-1" data-target="#reel-comments-1">
+                        <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M18 10c0 3.866-3.582 7-8 7a8.96 8.96 0 01-4.39-1.11L2 18l1.11-4.39A8.96 8.96 0 012 10c0-3.866 3.582-7 8-7s8 3.134 8 7z"/></svg>
+                        <span id="reel-comments-1">60</span>
+                    </button>
+                    <button class="share-btn flex items-center space-x-1" data-target="#reel-shares-1">
+                        <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path d="M15 8a3 3 0 10-2.83-2H8.83A3 3 0 106 8v4a3 3 0 102 2.83V11.17A3 3 0 1015 8z"/></svg>
+                        <span id="reel-shares-1">55</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Reel 2 -->
+        <div class="bg-white rounded-lg shadow p-4">
+            <div class="flex items-center mb-4">
+                <span class="inline-block bg-red-500 text-white text-xs px-2 py-1 rounded mr-2 animate-pulse">LIVE</span>
+                <h2 class="text-xl font-bold">Reels Post 2 - Live Stream</h2>
+            </div>
+            <div class="relative pb-[56.25%] mb-4">
+                <iframe class="absolute top-0 left-0 w-full h-full rounded-lg" src="https://www.youtube.com/embed/jfKfPfyJRdk" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="flex items-center justify-between text-gray-600 text-sm">
+                <div>
+                    <span class="mr-4"><i class="fa fa-eye"></i> <span id="reel-views-2">1,789</span> Visitors</span>
+                </div>
+                <div class="flex space-x-4">
+                    <button class="like-btn flex items-center space-x-1" data-target="#reel-likes-2">
+                        <svg class="w-5 h-5 text-pink-500" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"/></svg>
+                        <span id="reel-likes-2">134</span>
+                    </button>
+                    <button class="comment-btn flex items-center space-x-1" data-target="#reel-comments-2">
+                        <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M18 10c0 3.866-3.582 7-8 7a8.96 8.96 0 01-4.39-1.11L2 18l1.11-4.39A8.96 8.96 0 012 10c0-3.866 3.582-7 8-7s8 3.134 8 7z"/></svg>
+                        <span id="reel-comments-2">32</span>
+                    </button>
+                    <button class="share-btn flex items-center space-x-1" data-target="#reel-shares-2">
+                        <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path d="M15 8a3 3 0 10-2.83-2H8.83A3 3 0 106 8v4a3 3 0 102 2.83V11.17A3 3 0 1015 8z"/></svg>
+                        <span id="reel-shares-2">21</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Add more reels as needed -->
+    </section>
+
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>
+    <script>
+        // Like, Comment, Share button handlers
+        $(function() {
+            $('.like-btn').click(function() {
+                let target = $(this).data('target');
+                let count = parseInt($(target).text());
+                $(target).text(count + 1);
+            });
+            $('.comment-btn').click(function() {
+                let target = $(this).data('target');
+                let count = parseInt($(target).text());
+                $(target).text(count + 1);
+            });
+            $('.share-btn').click(function() {
+                let target = $(this).data('target');
+                let count = parseInt($(target).text());
+                $(target).text(count + 1);
+            });
+        });
+    </script>
+</body>
+</html></button>
