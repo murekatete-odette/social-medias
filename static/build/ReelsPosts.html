@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reels Post with Live Stream</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md mx-auto bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+        <!-- Live Video -->
+        <div class="relative">
+            <video id="liveVideo" class="w-full h-64 object-cover" autoplay loop muted>
+                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <span class="absolute top-3 left-3 bg-red-600 text-white text-xs px-2 py-1 rounded font-bold animate-pulse">LIVE</span>
+            <span class="absolute top-3 right-3 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded flex items-center">
+                <svg class="w-4 h-4 mr-1 text-green-400" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"/></svg>
+                <span id="viewerCount">1.2K</span>
+            </span>
+        </div>
+        <!-- User Info -->
+        <div class="flex items-center px-4 py-3">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="w-10 h-10 rounded-full mr-3">
+            <div>
+                <p class="text-white font-semibold">John Doe</p>
+                <p class="text-gray-400 text-xs">2 mins ago</p>
+            </div>
+        </div>
+        <!-- Post Caption -->
+        <div class="px-4 pb-2">
+            <p class="text-gray-200">Enjoying the live vibes! 🎥🔥 #LiveStream #FunTimes</p>
+        </div>
+        <!-- Social Actions -->
+        <div class="flex justify-between items-center px-4 py-2 border-t border-gray-700">
+            <button id="likeBtn" class="flex items-center text-gray-400 hover:text-pink-500 transition">
+                <svg id="likeIcon" class="w-6 h-6 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M5 15l7-7 7 7"></path>
+                </svg>
+                <span id="likeCount">120</span>
+            </button>
+            <button class="flex items-center text-gray-400 hover:text-blue-400 transition">
+                <svg class="w-6 h-6 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"></path>
+                </svg>
+                <span id="commentCount">34</span>
+            </button>
+            <button class="flex items-center text-gray-400 hover:text-green-400 transition">
+                <svg class="w-6 h-6 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M4 4v16h16V4H4zm4 4h8v8H8V8z"></path>
+                </svg>
+                <span id="shareCount">18</span>
+            </button>
+        </div>
+        <!-- Comments Section -->
+        <div class="px-4 py-2 bg-gray-700">
+            <div id="comments" class="space-y-2 max-h-24 overflow-y-auto">
+                <div class="flex items-start">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-7 h-7 rounded-full mr-2">
+                    <div>
+                        <p class="text-gray-100 text-sm"><span class="font-semibold">Anna:</span> Awesome live!</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <img src="https://randomuser.me/api/portraits/men/45.jpg" class="w-7 h-7 rounded-full mr-2">
+                    <div>
+                        <p class="text-gray-100 text-sm"><span class="font-semibold">Mike:</span> Love this 🔥</p>
+                    </div>
+                </div>
+            </div>
+            <form id="commentForm" class="flex mt-2">
+                <input id="commentInput" type="text" placeholder="Add a comment..." class="flex-1 px-2 py-1 rounded-l bg-gray-600 text-white focus:outline-none" required>
+                <button type="submit" class="bg-blue-500 px-3 py-1 rounded-r text-white font-semibold">Post</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Like button logic
+        let liked = false;
+        $('#likeBtn').on('click', function() {
+            liked = !liked;
+            let count = parseInt($('#likeCount').text());
+            if (liked) {
+                $('#likeIcon').attr('stroke', '#ec4899');
+                $('#likeCount').text(count + 1);
+            } else {
+                $('#likeIcon').attr('stroke', 'currentColor');
+                $('#likeCount').text(count - 1);
+            }
+        });
+
+        // Comment form logic
+        $('#commentForm').on('submit', function(e) {
+            e.preventDefault();
+            const comment = $('#commentInput').val().trim();
+            if (comment) {
+                $('#comments').append(`
+                    <div class="flex items-start">
+                        <img src="https://randomuser.me/api/portraits/men/46.jpg" class="w-7 h-7 rounded-full mr-2">
+                        <div>
+                            <p class="text-gray-100 text-sm"><span class="font-semibold">You:</span> ${$('<div>').text(comment).html()}</p>
+                        </div>
+                    </div>
+                `);
+                $('#commentInput').val('');
+                let commentCount = parseInt($('#commentCount').text());
+                $('#commentCount').text(commentCount + 1);
+                $('#comments').scrollTop($('#comments')[0].scrollHeight);
+            }
+        });
+
+        // Simulate live viewer count
+        setInterval(() => {
+            let viewers = (1000 + Math.floor(Math.random() * 500)).toLocaleString() + 'K';
+            $('#viewerCount').text(viewers);
+        }, 3000);
+    </script>
+</body>
+</html>
