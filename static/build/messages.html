@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Messages - Social Media Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white shadow p-4 flex items-center justify-between">
+        <h1 class="text-xl font-bold text-gray-800">Messages</h1>
+        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">New Chat</button>
+    </header>
+
+    <main class="flex flex-1 overflow-hidden">
+        <!-- Sidebar: Friends List -->
+        <aside class="w-72 bg-white border-r flex-shrink-0 flex flex-col">
+            <div class="p-4">
+                <input type="text" id="search" placeholder="Search friends..." class="w-full px-3 py-2 border rounded focus:outline-none focus:ring" />
+            </div>
+            <ul id="friendsList" class="flex-1 overflow-y-auto">
+                <!-- Friends will be injected here -->
+            </ul>
+        </aside>
+
+        <!-- Chat Area -->
+        <section class="flex-1 flex flex-col">
+            <div id="chatHeader" class="bg-white border-b p-4 flex items-center gap-3">
+                <img id="chatAvatar" src="https://i.pravatar.cc/40?img=1" alt="Avatar" class="w-10 h-10 rounded-full">
+                <div>
+                    <div id="chatName" class="font-semibold text-gray-800">Select a friend</div>
+                    <div id="chatStatus" class="text-xs text-gray-500">Online</div>
+                </div>
+            </div>
+            <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+                <!-- Messages will be injected here -->
+                <div class="text-gray-400 text-center mt-10">Select a friend to start chatting</div>
+            </div>
+            <form id="chatForm" class="bg-white p-4 flex gap-2 border-t" autocomplete="off" style="display:none;">
+                <input id="chatInput" type="text" placeholder="Type a message..." class="flex-1 px-3 py-2 border rounded focus:outline-none focus:ring" />
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Send</button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // Sample friends data
+        const friends = [
+            {
+                id: 1,
+                name: "Alice",
+                avatar: "https://i.pravatar.cc/40?img=1",
+                online: true,
+                unread: 2,
+                messages: [
+                    { from: "them", text: "Hey! How are you?" },
+                    { from: "me", text: "I'm good, you?" },
+                    { from: "them", text: "Doing great! 😊" }
+                ]
+            },
+            {
+                id: 2,
+                name: "Bob",
+                avatar: "https://i.pravatar.cc/40?img=2",
+                online: false,
+                unread: 0,
+                messages: [
+                    { from: "me", text: "Hi Bob!" },
+                    { from: "them", text: "Hey!" }
+                ]
+            },
+            {
+                id: 3,
+                name: "Charlie",
+                avatar: "https://i.pravatar.cc/40?img=3",
+                online: true,
+                unread: 5,
+                messages: [
+                    { from: "them", text: "Yo!" }
+                ]
+            }
+        ];
+
+        let currentFriendId = null;
+
+        function renderFriendsList(filter = "") {
+            const $list = $("#friendsList");
+            $list.empty();
+            friends
+                .filter(f => f.name.toLowerCase().includes(filter.toLowerCase()))
+                .forEach(friend => {
+                    $list.append(`
+                        <li class="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-gray-100 transition ${friend.id === currentFriendId ? 'bg-gray-200' : ''}" data-id="${friend.id}">
+                            <div class="relative">
+                                <img src="${friend.avatar}" alt="${friend.name}" class="w-10 h-10 rounded-full border ${friend.online ? 'border-green-400' : 'border-gray-300'}">
+                                ${friend.unread > 0 ? `<span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">${friend.unread}</span>` : ''}
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-800">${friend.name}</div>
+                                <div class="text-xs text-gray-500">${friend.online ? 'Online' : 'Offline'}</div>
+                            </div>
+                        </li>
+                    `);
+                });
+        }
+
+        function renderChat(friendId) {
+            const friend = friends.find(f => f.id === friendId);
+            if (!friend) return;
+            currentFriendId = friendId;
+
+            // Update header
+            $("#chatAvatar").attr("src", friend.avatar);
+            $("#chatName").text(friend.name);
+            $("#chatStatus").text(friend.online ? "Online" : "Offline");
+
+            // Render messages
+            const $messages = $("#chatMessages");
+            $messages.empty();
+            friend.messages.forEach(msg => {
+                if (msg.from === "me") {
+                    $messages.append(`
+                        <div class="flex justify-end">
+                            <div class="bg-blue-500 text-white px-4 py-2 rounded-lg max-w-xs break-words">${msg.text}</div>
+                        </div>
+                    `);
+                } else {
+                    $messages.append(`
+                        <div class="flex justify-start">
+                            <div class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg max-w-xs break-words">${msg.text}</div>
+                        </div>
+                    `);
+                }
+            });
+
+            // Mark messages as read
+            friend.unread = 0;
+            renderFriendsList($("#search").val());
+
+            // Show chat form
+            $("#chatForm").show();
+            // Scroll to bottom
+            $messages.scrollTop($messages[0].scrollHeight);
+        }
+
+        $(function() {
+            renderFriendsList();
+
+            // Friend click
+            $("#friendsList").on("click", "li", function() {
+                const id = Number($(this).data("id"));
+                renderChat(id);
+            });
+
+            // Search
+            $("#search").on("input", function() {
+                renderFriendsList($(this).val());
+            });
+
+            // Send message
+            $("#chatForm").on("submit", function(e) {
+                e.preventDefault();
+                const text = $("#chatInput").val().trim();
+                if (!text) return;
+                const friend = friends.find(f => f.id === currentFriendId);
+                friend.messages.push({ from: "me", text });
+                $("#chatInput").val("");
+                renderChat(currentFriendId);
+            });
+
+            // Responsive: hide sidebar on small screens
+            // (Optional: can be improved with a toggle button)
+        });
+    </script>
+</body>
+</html>
